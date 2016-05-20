@@ -20,9 +20,9 @@ public class Reader {
 	
 	private double sumOfValues = 0;
 	
-	public Reader() {
+	public Reader(String path) {
 		try {
-			br = new BufferedReader(new FileReader("C:/Users/Marek/workspace/Java Test/src/Plik z danymi.txt"));
+			br = new BufferedReader(new FileReader(path));
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -43,7 +43,7 @@ public class Reader {
 		    		String cutString = line.substring(beginIndex, endIndex);
 		    		cutString = cutString.replace(",", ".");
 		    		double tempValue = Double.parseDouble(cutString);
-		    		System.out.println(cutString+"  "+tempValue);
+		    		
 		    		sumOfValues += tempValue;
 		    	}
 		    	
