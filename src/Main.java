@@ -8,11 +8,14 @@ import Reader.Reader;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		double returnedSum = -1;
 		
 		Reader theReader = new Reader();
-		theReader.readFromFile();
-		theReader.closeReader();
+		theReader.readValuesFromFile();
+		theReader.closeBufferedReader();
+		returnedSum = theReader.getSumOfValues();
+		
+		System.out.printf("Sum of entries: %f", returnedSum);
 		
 	}
 

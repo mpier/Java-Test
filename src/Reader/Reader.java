@@ -14,7 +14,11 @@ import java.io.IOException;
  */
 public class Reader {
 
-	public BufferedReader br;
+	private BufferedReader br;
+	private String beginClause = "@amount:";
+	private String endClause = "PLN";
+	
+	private double sumOfValues = 0;
 	
 	public Reader() {
 		try {
@@ -25,17 +29,22 @@ public class Reader {
 		} 
 	}
 	
-	public void readFromFile() {
+	public void readValuesFromFile() {
 		try {
 		    int beginIndex = -1, endIndex = -1;
 
 		    String line = br.readLine();
 		    while (line != null) {
-		    	beginIndex = line.indexOf("@amount:");
-		    	endIndex = line.indexOf("PLN");
+		    	beginIndex = line.indexOf(beginClause);
+		    	endIndex = line.indexOf(endClause);
 		        
 		    	if(beginIndex>=0) {
-		    		System.out.println(line.substring(beginIndex, endIndex));
+		    		beginIndex += beginClause.length();
+		    		String cutString = line.substring(beginIndex, endIndex);
+		    		cutString = cutString.replace(",", ".");
+		    		double tempValue = Double.parseDouble(cutString);
+		    		System.out.println(cutString+"  "+tempValue);
+		    		sumOfValues += tempValue;
 		    	}
 		    	
 		        line = br.readLine();
@@ -45,7 +54,11 @@ public class Reader {
 		}
 	}
 	
-	public void closeReader() {
+	public double getSumOfValues() {
+		return sumOfValues;
+	}
+	
+	public void closeBufferedReader() {
 		try {
 			if(br != null) br.close();
 		} catch (IOException e) {
